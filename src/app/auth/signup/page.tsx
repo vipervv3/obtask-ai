@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { supabase } from '@/lib/supabase'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
@@ -13,7 +13,6 @@ export default function SignupPage() {
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const router = useRouter()
-  const supabase = createClientComponentClient()
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -34,13 +33,14 @@ export default function SignupPage() {
     }
 
     try {
+      console.log('Attempting signup with:', { email, passwordLength: password.length })
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`
-        }
       })
+      
+      console.log('Signup response:', { data, error })
 
       if (error) {
         setError(error.message)
