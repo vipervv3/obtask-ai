@@ -41,7 +41,7 @@ export default function DBTestPage() {
         console.log('Projects failed, trying users table...')
         const { data: usersData, error: usersError } = await supabase
           .from('users')
-          .select('id, email, name')
+          .select('id, email')
           .limit(1)
         
         if (usersError) {
