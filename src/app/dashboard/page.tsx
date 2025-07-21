@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { User } from '@supabase/supabase-js'
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const supabase = createClientComponentClient()
 
   useEffect(() => {
     const getUser = async () => {

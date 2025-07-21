@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
@@ -13,6 +13,7 @@ export default function SignupPage() {
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const router = useRouter()
+  const supabase = createClientComponentClient()
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
